@@ -26,6 +26,8 @@ There are only only 2 patterns.
 
 ## Build capnproto interface
 
+Basically, you don't need to do this because generated files are commited.
+
 ```bash
 $ cd interface
 $ capn compile -o c++ sample.cap
