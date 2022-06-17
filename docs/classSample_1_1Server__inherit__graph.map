@@ -1,0 +1,5 @@
+<map id="Sample::Server" name="Sample::Server">
+<area shape="rect" id="node1" title=" " alt="" coords="5,80,127,107"/>
+<area shape="rect" id="node3" href="$classRPCEvent.html" title="This class defines the event interface from server to client." alt="" coords="23,155,109,181"/>
+<area shape="rect" id="node2" title=" " alt="" coords="34,5,98,32"/>
+</map>

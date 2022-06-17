@@ -1,0 +1,4 @@
+var searchData=
+[
+  ['_5fcapnpprivate_0',['_capnpPrivate',['../structSample_1_1__capnpPrivate.html',1,'Sample::_capnpPrivate'],['../structSample_1_1Subscriber_1_1PushMessageParams_1_1__capnpPrivate.html',1,'Sample::Subscriber::PushMessageParams::_capnpPrivate'],['../structSample_1_1SubscribeParams_1_1__capnpPrivate.html',1,'Sample::SubscribeParams::_capnpPrivate'],['../structSample_1_1SubscribeResults_1_1__capnpPrivate.html',1,'Sample::SubscribeResults::_capnpPrivate'],['../structSample_1_1Subscriber_1_1PushMessageResults_1_1__capnpPrivate.html',1,'Sample::Subscriber::PushMessageResults::_capnpPrivate'],['../structSample_1_1Subscriber_1_1__capnpPrivate.html',1,'Sample::Subscriber::_capnpPrivate'],['../structSample_1_1InitializeParams_1_1__capnpPrivate.html',1,'Sample::InitializeParams::_capnpPrivate'],['../structSample_1_1InitializeResults_1_1__capnpPrivate.html',1,'Sample::InitializeResults::_capnpPrivate']]]
+];
