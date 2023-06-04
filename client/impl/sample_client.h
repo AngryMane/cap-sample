@@ -2,6 +2,8 @@
 #include <unistd.h>
 
 #include <iostream>
+#include <thread>
+#include <vector>
 
 #include "../../interface/sample.cap.h"
 
@@ -34,6 +36,12 @@ class SampleClient {
   SampleClient();
 
   /**
+   * @fn ~SampleClient
+   * @brief Destructor
+   */
+  ~SampleClient();
+
+  /**
    * @fn start
    * @brief Start event loop. This is a blocking function till the end of event
    * loop.
@@ -53,13 +61,19 @@ class SampleClient {
   void subscribe();
 
  private:
+  std::thread m_ReceiveThread;
+
   // This insance provides RPC logic like event-loop, wait-scope, ...etc.
-  kj::Own<capnp::EzRpcClient> m_RPCImpl;
+  kj::Own<capnp::EzRpcClient> m_SendRPC;
+
+  // This insance provides RPC logic like event-loop, wait-scope, ...etc.
+  kj::Own<capnp::EzRpcClient> m_ReceiveRPC;
 
   // These are the contact point with the server when pushing back any events
   // from the server.
   Sample::Subscriber::Client m_SubscriberImpl;
 
-  // This instance supports async execution on the main thread.
-  kj::Maybe<const kj::Executor &> m_AsyncExecutor;
+  // This keeps the response instance of the subscribe requests.
+  // kj Server can't call back subscriber when the client app releases the responses in this.
+  std::vector<capnp::Response<Sample::SubscribeResults>> m_SubscriberLifeCycle;
 };

@@ -22,7 +22,7 @@ void dummy_internal_function(SampleServer* server) {
  * @brief Entry point.
  */
 int main() {
-  auto server = new SampleServer("unix:");
+  auto server = new SampleServer("unix:sample.sock");
   std::thread another_thread([server]() { dummy_internal_function(server); });
   server->start();
   another_thread.join();
