@@ -12,7 +12,6 @@ SampleClient::SampleClient()
       m_SubscriberLifeCycle(),
       m_SubscriberImpl(
           Sample::Subscriber::Client(kj::heap<Server2ClientEvent>())){
-  subscribe();
 }
 
  SampleClient::~SampleClient(){
@@ -22,6 +21,7 @@ SampleClient::SampleClient()
 void SampleClient::start() { 
   m_ReceiveThread = std::thread([&]() {
     this->m_ReceiveRPC = kj::heap<capnp::EzRpcClient>("unix:sample.sock");
+    subscribe();
     kj::NEVER_DONE.wait(m_ReceiveRPC->getWaitScope()); 
   });
 }
@@ -39,8 +39,8 @@ void SampleClient::initialize() {
 void SampleClient::subscribe() {
   std::cout << __PRETTY_FUNCTION__  << " called" << std::endl;
 
-  auto& waitScope = m_SendRPC->getWaitScope();
-  auto sample_top = m_SendRPC->getMain<Sample>();
+  auto& waitScope = m_ReceiveRPC->getWaitScope();
+  auto sample_top = m_ReceiveRPC->getMain<Sample>();
   auto subscribe_request = sample_top.subscribeRequest();
   subscribe_request.setSubscriber(m_SubscriberImpl);
   m_SubscriberLifeCycle.push_back(subscribe_request.send().wait(waitScope));
