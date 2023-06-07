@@ -25,7 +25,15 @@ function run_test (){
     kill ${SERVER_PID}
 }
 
-generate_cap_files 
-build
-run_test 
-rm sample.sock
+if [ -z "$1" ]; then
+  generate_cap_files 
+  build
+fi
+
+if [ "$1" = "test" ]; then
+  rm sample.sock
+  run_test 
+  rm sample.sock
+fi
+
+

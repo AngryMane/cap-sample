@@ -202,6 +202,10 @@ kj::LowLevelAsyncIoProvider& CustomRpcClient::getLowLevelIoProvider() {
   return impl->context->getLowLevelIoProvider();
 }
 
+kj::UnixEventPort& CustomRpcClient::getUnixEventPort(){
+  return impl->context->getUnixEventPort();
+}
+
 // =======================================================================================
 
 namespace {

@@ -13,7 +13,8 @@ const static std::vector<int> TARGET_SIGNALS = {
   SIGQUIT,
   //SIGTRAP,
   //SIGKILL,
-  SIGPIPE,
+  // When client had gone. Cap'n Proto masks SIGPIPE, so nothing to do here. 
+  //SIGPIPE,  
   //SIGALRM,
   //SIGURG,
   //SIGSTOP,

@@ -1,4 +1,3 @@
-#include <capnp/ez-rpc.h>
 #include <unistd.h>
 
 #include <future>
@@ -14,7 +13,8 @@
 int main() {
   auto client = new SampleClient();
   client->start();
-  while (1) {
+  sleep(1);
+  while (client->is_running()) {
     client->initialize();
     sleep(1);
   }

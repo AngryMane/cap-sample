@@ -155,6 +155,10 @@ public:
   // Get the underlying LowLevelAsyncIoProvider set up by the RPC system.  This is useful if you
   // want to do some non-RPC I/O in asynchronous fashion.
 
+  kj::UnixEventPort& getUnixEventPort();
+  // Get the underlying LowLevelAsyncIoProvider set up by the RPC system.  This is useful if you
+  // want to do some non-RPC I/O in asynchronous fashion.
+
 private:
   struct Impl;
   kj::Own<Impl> impl;

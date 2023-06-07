@@ -1,4 +1,3 @@
-#include <capnp/ez-rpc.h>
 #include <unistd.h>
 
 #include <iostream>
@@ -6,6 +5,7 @@
 #include <vector>
 
 #include "../../interface/sample.cap.h"
+#include "custom-rpc.h"
 
 /**
  *  @class SampleClient
@@ -60,14 +60,22 @@ class SampleClient {
    */
   void subscribe();
 
+  /**
+   * @fn is_running
+   * @brief is running or not
+   */
+  bool is_running();
+
  private:
+  bool m_IsRunning; 
+
   std::thread m_ReceiveThread;
 
   // This insance provides RPC logic like event-loop, wait-scope, ...etc.
-  kj::Own<capnp::EzRpcClient> m_SendRPC;
+  kj::Own<custom_rpc::CustomRpcClient> m_SendRPC;
 
   // This insance provides RPC logic like event-loop, wait-scope, ...etc.
-  kj::Own<capnp::EzRpcClient> m_ReceiveRPC;
+  kj::Own<custom_rpc::CustomRpcClient> m_ReceiveRPC;
 
   // These are the contact point with the server when pushing back any events
   // from the server.
