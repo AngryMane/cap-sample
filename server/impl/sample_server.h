@@ -1,6 +1,7 @@
-#include <capnp/ez-rpc.h>
+//#include <capnp/ez-rpc.h>
 
 #include "rpc_event.h"
+#include "custom-rpc.h"
 
 /**
  *  @class SampleServer
@@ -32,7 +33,7 @@ class SampleServer : public Server2ClientEvent {
   kj::Own<RPCEvent> m_RPCEventImpl;
 
   // This insance provides RPC logic like event-loop, wait-scope, ...etc.
-  kj::Own<capnp::EzRpcServer> m_RPCLogicImpl;
+  kj::Own<custom_rpc::CustomRpcServer> m_RPCLogicImpl;
 
   // This instance supports async execution on the main thread.
   kj::Maybe<const kj::Executor &> m_AsyncExecutor;

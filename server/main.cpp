@@ -10,8 +10,9 @@
  * @fn dummy_internal_function
  * @brief A dummy function for running any server features.
  */
+bool is_continue = true;
 void dummy_internal_function(SampleServer* server) {
-  while (1) {
+  while (is_continue) {
     server->push_message_request();
     sleep(1);
   }
@@ -25,6 +26,7 @@ int main() {
   auto server = new SampleServer("unix:sample.sock");
   std::thread another_thread([server]() { dummy_internal_function(server); });
   server->start();
+  is_continue = false;
   another_thread.join();
   delete server;
 
