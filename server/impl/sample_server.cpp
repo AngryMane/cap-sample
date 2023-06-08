@@ -2,6 +2,10 @@
 #include <numeric>
 #include <vector>
 
+#include <kj/async-io.h>
+#include <kj/async-unix.h>
+#include <capnp/rpc-twoparty.h>
+
 const static std::vector<int> TARGET_SIGNALS = {
   SIGINT,
   SIGILL,
@@ -31,26 +35,33 @@ const static std::vector<int> TARGET_SIGNALS = {
   //SIGPROF,
 };
 
-SampleServer::SampleServer(std::string server_adder)
+SampleServer::SampleServer()
   : m_RPCEventImpl(kj::refcounted<RPCEvent>()),
-    m_RPCLogicImpl(kj::heap<custom_rpc::CustomRpcServer>(kj::addRef(*m_RPCEventImpl),
-                                                server_adder)),
-    m_AsyncExecutor(kj::getCurrentThreadExecutor()) {
+    m_AsynIoContext(kj::setupAsyncIo()){
   for (auto signal : TARGET_SIGNALS){
     kj::UnixEventPort::captureSignal(signal);
   }
 }
 
-void SampleServer::start() {
-  auto& wait_scope = m_RPCLogicImpl->getWaitScope();
-  kj::Promise<siginfo_t> never_done_casted = kj::NEVER_DONE;
+void SampleServer::start(std::string server_adder) {
+  capnp::TwoPartyServer server(kj::addRef(*m_RPCEventImpl));
+  m_AsyncExecutor = kj::getCurrentThreadExecutor();
+  auto address = m_AsynIoContext.provider->getNetwork().parseAddress(server_adder).wait(m_AsynIoContext.waitScope);
+  auto listener = address->listen();
+  auto listenPromise = server.listen(*listener);
+
+  kj::Promise<siginfo_t> never_done_casted = listenPromise.then([](){return siginfo_t();});
   kj::Promise<siginfo_t> on_signal = std::accumulate(TARGET_SIGNALS.begin(), TARGET_SIGNALS.end(), kj::mv(never_done_casted), [&](kj::Promise<siginfo_t>& _on_signal, int signal){
-    return _on_signal.exclusiveJoin(m_RPCLogicImpl->getUnixEventPort().onSignal(signal));
+    return _on_signal.exclusiveJoin(m_AsynIoContext.unixEventPort.onSignal(signal));
   }).then([](siginfo_t a){
     std::cout << a.si_signo << std::endl;
     return a;
   });
-  on_signal.wait(wait_scope);
+  on_signal.wait(m_AsynIoContext.waitScope);
+}
+
+void SampleServer::taskFailed(kj::Exception&& exception){
+    kj::throwFatalException(kj::mv(exception));
 }
 
 void SampleServer::push_message_request() {

@@ -1,6 +1,7 @@
 # cap-sample
 
-cap-sample is a sample rpc client and server using capnproto, EzPRCServer.  
+cap-sample is a sample rpc client and server using capnproto, TwoPartyClent and TwoPartyServer.  
+If you need a sample of EzRpcServer and Client, see older version of this repository.
 
 ## Directory structure
 
@@ -24,40 +25,18 @@ There are only only 2 patterns.
 1. The client requests `subscribe` event to the server, and the server periodically pushes back `push_message` event.
 
 
-## Build capnproto interface
-
-Basically, you don't need to do this because generated files are commited.
+## Build capnproto interface, client and server
 
 ```bash
-$ cd interface
-$ capn compile -o c++ sample.cap
-$ ls
-sample.cap  sample.cap.c++  sample.cap.h
-```
-
-## Build client and server
-
-```bash
-$ mkdir build
-$ cd build
-$ cmake ..
-$ make
+$ ./run_build.sh
 ```
 
 ## Usage
 
-You can launch the server like below.  
+You can launch the server and connect client like below.
 
 ```bash
-$ cd build/server
-$ ./server
-```
-
-You can run the client like below.  
-
-```bash
-$ cd build/client
-$ ./client
+$ ./run_build.sh test
 ```
 
 ## License

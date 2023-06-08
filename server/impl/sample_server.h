@@ -1,25 +1,37 @@
 //#include <capnp/ez-rpc.h>
 
 #include "rpc_event.h"
-#include "custom-rpc.h"
+#include <kj/async-io.h>
+
+namespace kj {
+  class ConnectionReceiver;
+}
 
 /**
  *  @class SampleServer
  *  @brief This class provides interfaces to communicate with client.
  */
-class SampleServer : public Server2ClientEvent {
+class SampleServer :  public Server2ClientEvent {
  public:
   /**
    * @fn SampleServer
    * @brief Constructor
    */
-  SampleServer(std::string server_adder);
+  SampleServer();
 
   /**
    * @fn start
    * @brief Start event loop for communication with client by current thread.
    */
-  void start();
+  void start(std::string server_adder);
+
+public:
+
+  /**
+   * @fn start
+   * @brief Start event loop for communication with client by current thread.
+   */
+  virtual void taskFailed(kj::Exception&& exception);
 
  public:
   /**
@@ -29,12 +41,13 @@ class SampleServer : public Server2ClientEvent {
   virtual void push_message_request();
 
  private:
+
   // This instance provides all the IF of the event between server and client.
   kj::Own<RPCEvent> m_RPCEventImpl;
 
-  // This insance provides RPC logic like event-loop, wait-scope, ...etc.
-  kj::Own<custom_rpc::CustomRpcServer> m_RPCLogicImpl;
-
   // This instance supports async execution on the main thread.
   kj::Maybe<const kj::Executor &> m_AsyncExecutor;
+
+  // 
+  kj::AsyncIoContext m_AsynIoContext;
 };

@@ -3,9 +3,9 @@
 #include <iostream>
 #include <thread>
 #include <vector>
+#include <capnp/rpc-twoparty.h>
 
 #include "../../interface/sample.cap.h"
-#include "custom-rpc.h"
 
 /**
  *  @class SampleClient
@@ -58,7 +58,7 @@ class SampleClient {
    * @fn subscribe
    * @brief When requesting `subscribe`, call this function.
    */
-  void subscribe();
+  void subscribe(kj::AsyncIoContext& async_io, kj::Own<capnp::TwoPartyClient>& rpc_client);
 
   /**
    * @fn is_running
@@ -71,11 +71,18 @@ class SampleClient {
 
   std::thread m_ReceiveThread;
 
-  // This insance provides RPC logic like event-loop, wait-scope, ...etc.
-  kj::Own<custom_rpc::CustomRpcClient> m_SendRPC;
+  kj::Own<kj::NetworkAddress> m_Address;
+
+  kj::Own<kj::AsyncIoStream> m_Connection;
 
   // This insance provides RPC logic like event-loop, wait-scope, ...etc.
-  kj::Own<custom_rpc::CustomRpcClient> m_ReceiveRPC;
+  kj::AsyncIoContext m_SendAsyncIoContext;
+
+  // This insance provides RPC logic like event-loop, wait-scope, ...etc.
+  kj::Own<capnp::TwoPartyClient> m_SendRPC;
+
+  // This insance provides RPC logic like event-loop, wait-scope, ...etc.
+  kj::Own<capnp::TwoPartyClient> m_ReceiveRPC;
 
   // These are the contact point with the server when pushing back any events
   // from the server.

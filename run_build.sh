@@ -21,6 +21,7 @@ function build (){
 function run_test (){
     build/server/server &
     SERVER_PID=$!
+    sleep 1
     timeout 5s build/client/client
     kill ${SERVER_PID}
 }

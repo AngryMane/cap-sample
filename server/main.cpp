@@ -4,6 +4,7 @@
 #include <future>
 
 #include "../interface/sample.cap.h"
+
 #include "sample_server.h"
 
 /**
@@ -23,9 +24,9 @@ void dummy_internal_function(SampleServer* server) {
  * @brief Entry point.
  */
 int main() {
-  auto server = new SampleServer("unix:sample.sock");
+  auto server = new SampleServer();
   std::thread another_thread([server]() { dummy_internal_function(server); });
-  server->start();
+  server->start("unix:sample.sock");
   is_continue = false;
   another_thread.join();
   delete server;
