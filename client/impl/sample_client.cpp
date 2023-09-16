@@ -9,10 +9,10 @@
 
 const static std::vector<int> TARGET_SIGNALS = {
   SIGINT,
-  SIGILL,
+  //SIGILL,
   SIGABRT,
-  SIGFPE,
-  SIGSEGV,
+  //SIGFPE,
+  //SIGSEGV,
   SIGTERM,
   SIGHUP,
   SIGQUIT,
@@ -51,11 +51,22 @@ SampleClient::SampleClient()
       .parseAddress("unix:sample.sock").wait(m_SendAsyncIoContext.waitScope);
   m_Connection = m_Address->connect().wait(m_SendAsyncIoContext.waitScope);
   m_SendRPC = kj::heap<capnp::TwoPartyClient>(*m_Connection);
+
+  // WARNING: This must run on the main thread.
+  sigset_t mask;
+  sigemptyset(&mask);
+  for (auto i : TARGET_SIGNALS){
+    sigaddset(&mask, i);
+  }
+  pthread_sigmask(SIG_BLOCK, &mask, nullptr);
 }
 
- SampleClient::~SampleClient(){
-  m_ReceiveThread.detach();
- }
+SampleClient::~SampleClient(){
+  std::cout << "[CLIENT]" << __PRETTY_FUNCTION__ << " called" << std::endl;
+  if (m_ReceiveThread.joinable()) {
+    m_ReceiveThread.detach();
+  }
+}
 
 void SampleClient::start() { 
   m_ReceiveThread = std::thread([&]() {
@@ -80,6 +91,8 @@ void SampleClient::start() {
     });
     on_signal.wait(async_io.waitScope);
     m_IsRunning = false;
+    m_Connection.~Own();
+    m_Address.~Own();
   });
 }
 

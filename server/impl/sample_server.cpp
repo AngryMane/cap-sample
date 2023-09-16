@@ -8,10 +8,10 @@
 
 const static std::vector<int> TARGET_SIGNALS = {
   SIGINT,
-  SIGILL,
+  //SIGILL,
   SIGABRT,
-  SIGFPE,
-  SIGSEGV,
+  //SIGFPE,
+  //SIGSEGV,
   SIGTERM,
   SIGHUP,
   SIGQUIT,
