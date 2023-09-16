@@ -3,7 +3,7 @@
 
 #include <iostream>
 
-#include "../../interface/sample.cap.h"
+#include "sample.cap.h"
 
 using Client2ServerEvent = Sample::Server;
 

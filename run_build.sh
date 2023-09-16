@@ -19,10 +19,10 @@ function build (){
 }
 
 function run_test (){
-    build/server/server &
+    build/server/cpp/server &
     SERVER_PID=$!
     sleep 1
-    timeout 5s build/client/client
+    timeout 5s build/client/cpp/client
     kill ${SERVER_PID}
 }
 

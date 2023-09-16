@@ -3,7 +3,7 @@
 #include <future>
 #include <iostream>
 
-#include "../interface/sample.cap.h"
+#include "sample.cap.h"
 #include "sample_client.h"
 
 /**

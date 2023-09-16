@@ -5,7 +5,7 @@
 #include <vector>
 #include <capnp/rpc-twoparty.h>
 
-#include "../../interface/sample.cap.h"
+#include "sample.cap.h"
 
 /**
  *  @class SampleClient
