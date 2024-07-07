@@ -11,10 +11,14 @@ $ tree -L 1
 ├── CMakeLists.txt  # CMake config file
 ├── README.md       # the file you are now reading right now
 ├── client          # client project dir
+│   ├── cpp
+│   └── rust
 ├── docs            # doxygen document 
 ├── doxygen.conf    # doxygen config
 ├── interface       # capnproto schema and generated sources
 └── server          # server project dir
+    ├── cpp
+    └── rust
 ```
 
 ## RPC patterns
@@ -28,7 +32,10 @@ There are only only 2 patterns.
 ## Build capnproto interface, client and server
 
 ```bash
-$ ./run_build.sh
+$ mkdir build
+$ cd build
+$ cmake .. 
+$ make
 ```
 
 ## Usage
@@ -36,7 +43,14 @@ $ ./run_build.sh
 You can launch the server and connect client like below.
 
 ```bash
-$ ./run_build.sh test
+# run server implemented by cpp
+$ ./build/server/cpp/server
+# run server implemented by rust
+$ ./build/server/rust/server_rust
+# run client implemented by cpp
+$ ./build/client/cpp/client
+# run client implemented by rust
+$ ./build/client/rust/client_rust
 ```
 
 ## License
