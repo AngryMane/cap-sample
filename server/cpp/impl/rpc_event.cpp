@@ -4,6 +4,7 @@ RPCEvent::RPCEvent() : m_Subscribers() {}
 
 kj::Promise<void> RPCEvent::initialize(InitializeContext context) {
   std::cout << "[SERVER]" << __PRETTY_FUNCTION__  << " called" << std::endl;
+  context.getResults().setResult(true);
   return kj::READY_NOW;
 }
 
