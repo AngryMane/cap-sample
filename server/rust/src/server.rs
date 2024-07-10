@@ -8,10 +8,6 @@ use tokio_util::compat::TokioAsyncReadCompatExt;
 
 use crate::unix_stream_listener;
 
-
-#[derive(Clone, Copy)]
-pub struct PowerFunction;
-
 type SubscriberMap = HashMap<u64, subscriber::Client>;
 
 struct SampleServerImpl{

@@ -1,4 +1,6 @@
 use crate::sample_capnp::sample;
+use crate::sample_capnp::sample::Client;
+
 use capnp_rpc::{rpc_twoparty_capnp, twoparty, RpcSystem};
 use futures::AsyncReadExt;
 use tokio_util::compat::TokioAsyncReadCompatExt;
