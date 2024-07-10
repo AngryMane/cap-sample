@@ -3,12 +3,7 @@ use capnp_rpc::{rpc_twoparty_capnp, twoparty, RpcSystem};
 use futures::AsyncReadExt;
 use tokio_util::compat::TokioAsyncReadCompatExt;
 use std::{thread, time};
-
 use crate::unix_stream_proxy;
-
-
-#[derive(Clone, Copy)]
-pub struct PowerFunction;
 
 pub async fn main() -> Result<(), Box<dyn std::error::Error>> {
     tokio::task::LocalSet::new().run_until(try_main()).await
