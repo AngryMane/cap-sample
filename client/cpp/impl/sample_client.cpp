@@ -41,6 +41,15 @@ kj::Promise<void> SampleClient::Server2ClientEvent::pushMessage(
   return kj::READY_NOW;
 }
 
+void setSignalCapture() {
+  sigset_t mask;
+  sigemptyset(&mask);
+  for (auto i : TARGET_SIGNALS){
+    sigaddset(&mask, i);
+  }
+  pthread_sigmask(SIG_BLOCK, &mask, nullptr);
+}
+
 SampleClient::SampleClient()
     : m_IsRunning(false),
       m_SendAsyncIoContext(kj::setupAsyncIo()),
@@ -53,12 +62,12 @@ SampleClient::SampleClient()
   m_SendRPC = kj::heap<capnp::TwoPartyClient>(*m_Connection);
 
   // WARNING: This must run on the main thread.
-  sigset_t mask;
-  sigemptyset(&mask);
-  for (auto i : TARGET_SIGNALS){
-    sigaddset(&mask, i);
-  }
-  pthread_sigmask(SIG_BLOCK, &mask, nullptr);
+  //sigset_t mask;
+  //sigemptyset(&mask);
+  //for (auto i : TARGET_SIGNALS){
+  //  sigaddset(&mask, i);
+  //}
+  //pthread_sigmask(SIG_BLOCK, &mask, nullptr);
 }
 
 SampleClient::~SampleClient(){
@@ -100,6 +109,7 @@ void SampleClient::initialize() {
   std::cout << "[CLIENT]" << __PRETTY_FUNCTION__  << " called" << std::endl;
   auto cap = m_SendRPC->bootstrap().castAs<Sample>();
   auto req = cap.initializeRequest();
+  req.setParam(10);
   auto ret = req.send().wait(m_SendAsyncIoContext.waitScope);
 }
 

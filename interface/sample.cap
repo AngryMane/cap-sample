@@ -1,7 +1,7 @@
 @0xef41c006a99a86cb;
 
 interface Sample {
-    initialize @0 () -> (result: Bool);
+    initialize @0 (param: Int16) -> (result: Bool);
 
     interface Subscriber {
         pushMessage @0 () -> (result: Bool);

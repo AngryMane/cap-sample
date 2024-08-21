@@ -11,6 +11,7 @@
  * @brief Entry point.
  */
 int main() {
+  setSignalCapture();
   auto client = new SampleClient();
   client->start();
   sleep(1);

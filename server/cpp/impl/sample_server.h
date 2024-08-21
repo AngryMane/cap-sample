@@ -7,6 +7,8 @@ namespace kj {
   class ConnectionReceiver;
 }
 
+void setSignalCapture();
+
 /**
  *  @class SampleServer
  *  @brief This class provides interfaces to communicate with client.

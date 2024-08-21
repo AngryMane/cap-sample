@@ -11,7 +11,7 @@
 
 #ifndef CAPNP_VERSION
 #error "CAPNP_VERSION is not defined, is capnp/generated-header-support.h missing?"
-#elif CAPNP_VERSION != 1000001
+#elif CAPNP_VERSION != 1000002
 #error "Version mismatch between generated code and library headers.  You must use the same version of the Cap'n Proto compiler and library."
 #endif
 
@@ -113,7 +113,7 @@ struct Sample::InitializeParams {
   class Pipeline;
 
   struct _capnpPrivate {
-    CAPNP_DECLARE_STRUCT_HEADER(a281da8ba4f2ddcd, 0, 0)
+    CAPNP_DECLARE_STRUCT_HEADER(a281da8ba4f2ddcd, 1, 0)
     #if !CAPNP_LITE
     static constexpr ::capnp::_::RawBrandedSchema const* brand() { return &schema->defaultBrand; }
     #endif  // !CAPNP_LITE
@@ -443,6 +443,8 @@ public:
   }
 #endif  // !CAPNP_LITE
 
+  inline  ::int16_t getParam() const;
+
 private:
   ::capnp::_::StructReader _reader;
   template <typename, ::capnp::Kind>
@@ -470,6 +472,9 @@ public:
 #if !CAPNP_LITE
   inline ::kj::StringTree toString() const { return asReader().toString(); }
 #endif  // !CAPNP_LITE
+
+  inline  ::int16_t getParam();
+  inline void setParam( ::int16_t value);
 
 private:
   ::capnp::_::StructBuilder _builder;
@@ -796,6 +801,20 @@ inline bool Sample::Subscriber::PushMessageResults::Builder::getResult() {
 }
 inline void Sample::Subscriber::PushMessageResults::Builder::setResult(bool value) {
   _builder.setDataField<bool>(
+      ::capnp::bounded<0>() * ::capnp::ELEMENTS, value);
+}
+
+inline  ::int16_t Sample::InitializeParams::Reader::getParam() const {
+  return _reader.getDataField< ::int16_t>(
+      ::capnp::bounded<0>() * ::capnp::ELEMENTS);
+}
+
+inline  ::int16_t Sample::InitializeParams::Builder::getParam() {
+  return _builder.getDataField< ::int16_t>(
+      ::capnp::bounded<0>() * ::capnp::ELEMENTS);
+}
+inline void Sample::InitializeParams::Builder::setParam( ::int16_t value) {
+  _builder.setDataField< ::int16_t>(
       ::capnp::bounded<0>() * ::capnp::ELEMENTS, value);
 }
 

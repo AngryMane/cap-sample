@@ -52,20 +52,11 @@ checksum = "514de17de45fdb8dc022b1a7975556c53c86f9f0aa5f534b98977b171857c2c9"
 
 [[package]]
 name = "capnp"
-version = "0.18.13"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "384b671a5b39eadb909b0c2b81d22a400d446526e651e64be9eb6674b33644a4"
-dependencies = [
- "embedded-io 0.5.0",
-]
-
-[[package]]
-name = "capnp"
 version = "0.19.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "de71387912cac7dd3cb7c219e09628411620a18061bba58c71453c26ae7bf66a"
 dependencies = [
- "embedded-io 0.6.1",
+ "embedded-io",
 ]
 
 [[package]]
@@ -74,7 +65,7 @@ version = "0.19.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "5fac483cb34e3bc0be251dba7ce318f465143dd18f948c7bd7ad035f6fecfb1b"
 dependencies = [
- "capnp 0.19.6",
+ "capnp",
  "futures",
 ]
 
@@ -84,18 +75,18 @@ version = "0.19.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "13b692f9454566fa16c5897a5d329e77496b6c8012777025f18cc82f7a65617e"
 dependencies = [
- "capnp 0.19.6",
+ "capnp",
  "capnp-futures",
  "futures",
 ]
 
 [[package]]
 name = "capnpc"
-version = "0.18.1"
+version = "0.19.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "a642faaaa78187e70bdcc0014c593c213553cfeda3b15054426d0d596048b131"
+checksum = "c75ba30e0f08582d53c2f3710cf4bb65ff562614b1ba86906d7391adffe189ec"
 dependencies = [
- "capnp 0.18.13",
+ "capnp",
 ]
 
 [[package]]
@@ -109,12 +100,6 @@ name = "cfg-if"
 version = "1.0.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "baf1de4339761588bc0619e3cbc0120ee582ebb74b53b4efbf79117bd2da40fd"
-
-[[package]]
-name = "embedded-io"
-version = "0.5.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "658bbadc628dc286b9ae02f0cb0f5411c056eb7487b72f0083203f115de94060"
 
 [[package]]
 name = "embedded-io"
@@ -362,7 +347,7 @@ checksum = "94143f37725109f92c262ed2cf5e59bce7498c01bcc1502d7b9afe439a4e9f49"
 name = "server_rust"
 version = "0.0.0"
 dependencies = [
- "capnp 0.18.13",
+ "capnp",
  "capnp-rpc",
  "capnpc",
  "futures",

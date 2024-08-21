@@ -24,6 +24,7 @@ void dummy_internal_function(SampleServer* server) {
  * @brief Entry point.
  */
 int main() {
+  setSignalCapture();
   auto server = new SampleServer();
   std::thread another_thread([server]() { dummy_internal_function(server); });
   server->start("unix:sample.sock");

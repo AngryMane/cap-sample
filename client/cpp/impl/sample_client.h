@@ -7,6 +7,8 @@
 
 #include "sample.cap.h"
 
+void setSignalCapture();
+
 /**
  *  @class SampleClient
  *  @brief This class provides the event interface from client to server, and

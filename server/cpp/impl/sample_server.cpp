@@ -35,12 +35,15 @@ const static std::vector<int> TARGET_SIGNALS = {
   //SIGPROF,
 };
 
-SampleServer::SampleServer()
-  : m_RPCEventImpl(kj::refcounted<RPCEvent>()),
-    m_AsynIoContext(kj::setupAsyncIo()){
+void setSignalCapture() {
   for (auto signal : TARGET_SIGNALS){
     kj::UnixEventPort::captureSignal(signal);
   }
+}
+
+SampleServer::SampleServer()
+  : m_RPCEventImpl(kj::refcounted<RPCEvent>()),
+    m_AsynIoContext(kj::setupAsyncIo()){
 }
 
 void SampleServer::start(std::string server_adder) {
